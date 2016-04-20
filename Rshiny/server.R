@@ -13,6 +13,23 @@ shinyServer(function(input, output) {
   covar <- read_csv(file.path(datapath, "b6btbr_covar.csv"), comment="#")
   pheno <- left_join(pheno, covar[, 1:2], by = "MouseNum")
   
+  f=function(k){
+    a=geno[,which(pmap$chr==k)]
+    b=matrix(0,dim(a)[2]-1,dim(a)[1])
+    for (i in 1:(dim(a)[2]-1)){
+      for(j in 1:dim(a)[1]){
+        b[i,j]=as.character(a[j,i+1])
+      }
+    }
+    b[b=="RR"]=1
+    b[b=="BR"]=2
+    b[b=="BB"]=3
+    b[is.na(b)]=0
+    b=as.numeric(b)
+    d=matrix(b,(dim(a)[2]-1),dim(a)[1])
+    heatmap(d,Rowv=NA, Colv=NA,scale = 'column')
+  }
+  
   chr <- reactive({
     # n <- input$slider
     
@@ -33,7 +50,7 @@ shinyServer(function(input, output) {
   output$plot <- renderPlot({
     if (sex() == "All") {
       ggplot(pheno, aes(log10_insulin_10wk)) + geom_histogram() +
-        facet_grid()
+        facet_grid(Sex~.)
     } else if (sex() == "Male") {
       pheno %>% filter(Sex == "Male") %>% 
         ggplot(aes(log10_insulin_10wk)) + geom_histogram()  
@@ -46,5 +63,9 @@ shinyServer(function(input, output) {
   
   output$summary <- renderPrint({
     print(paste("This is to select chromosome", chr()))
+  })
+  
+  output$heat <- renderPlot({
+    f(chr())
   })
 })

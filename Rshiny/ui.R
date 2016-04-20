@@ -28,7 +28,7 @@ shinyUI(fluidPage(
       tabsetPanel(
         tabPanel("Plot of Insulin", plotOutput("plot")), 
         tabPanel("test", verbatimTextOutput("summary")), 
-        tabPanel("Hierarchical Cluster", plotOutput("cluster"))
+        tabPanel("Heat Map", plotOutput("heat"))
       )  
     )
     
