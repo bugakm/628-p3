@@ -1,0 +1,44 @@
+---
+title: "Systems Genetics"
+author: "Chen Li, Zhuangye Chen, Chenxi He"
+date: "April 27, 2016"
+output: slidy_presentation
+---
+
+## Initial Exploration 
+
+1.Chromosome & Insulin
+ 
+ Can we predict insulin level based on the correlation of different mice's chromosome?
+ 
+ 
+ 
+2. Markers & Insulin
+ 
+ Assume markers are independent of each other;
+ 
+ Is the insulin level significantly different based on genotype?
+ 
+ Basic idea: Anova
+
+## How is sex related to insulin
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+library(readr)
+library(ggplot2)
+library(dplyr)
+datapath <- file.path("https://raw.githubusercontent.com","rqtl/qtl2data/master/B6BTBR")
+geno <- read_csv(file.path(datapath, "b6btbr_geno.csv"), comment="#", na=c("","NA","-"))
+pmap <- read_csv(file.path(datapath, "b6btbr_pmap.csv"), comment="#", col_types=list(col_character(),col_character(),col_double()))
+pheno <- read_csv(file.path(datapath, "b6btbr_pheno.csv"), comment="#")
+covar <- read_csv(file.path(datapath, "b6btbr_covar.csv"), comment="#")
+pheno <- read_csv(file.path(datapath, "b6btbr_pheno.csv"), comment="#")
+  covar <- read_csv(file.path(datapath, "b6btbr_covar.csv"), comment="#")
+  pheno <- left_join(pheno, covar[, 1:2], by = "MouseNum")
+ggplot(pheno, aes(log10_insulin_10wk)) + geom_histogram()+facet_grid(Sex~.)
+```
+
+## Further Analysis
+
+- Interaction between markers 
+
+- Regression
