@@ -1,0 +1,13 @@
+pv=function(b=0.05){
+  y=pheno[,2]
+  p=c()
+  for(i in 1:2057){
+    g=aov(y~geno[,(i+1)])
+    p[i]=unlist(summary(g))[9]
+  }
+  k=sum(p<b)
+  pmap$P=p
+  d=c(157,292,449,575,700,802,911,1002,1095,1218,1342,1458,1574,1665,1767,1833,1893,1988)
+  plot=ggplot(pmap,aes(marker,P)) + geom_point() + geom_hline(yintercept=b, color='red')+ geom_vline(xintercept=d,linetype='dashed')
+  return(list(plot,k))
+}
