@@ -38,7 +38,8 @@ shinyServer(function(input, output) {
     ggplot(pmap,aes(marker,P)) + geom_point() + 
       geom_hline(yintercept=b, color='red') + 
       geom_vline(xintercept=d,linetype='dashed') +
-      ggtitle(paste(k, "markers have p-vales less than", b))
+      ggtitle(paste(k, "markers have p-vales less than", b)) +
+      scale_y_log10() # display log scale of p-values
   }
   
   # function for heat map

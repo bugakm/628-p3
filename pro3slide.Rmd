@@ -37,6 +37,13 @@ pheno <- read_csv(file.path(datapath, "b6btbr_pheno.csv"), comment="#")
 ggplot(pheno, aes(log10_insulin_10wk)) + geom_histogram()+facet_grid(Sex~.)
 ```
 
+## R Shiny
+
+
+
+
+- Demo
+
 ## Further Analysis
 
 - Interaction between markers 

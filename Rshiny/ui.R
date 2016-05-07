@@ -4,7 +4,7 @@ library(shiny)
 shinyUI(fluidPage(
   # Application title
   titlePanel(p("Systems Genetics",
-              h4("by Jason, Dick, Michael"))),
+              h4("by Chenxi, Chen and Zhuangye"))),
   
   sidebarLayout( #position = "right",
     sidebarPanel(#"sider panel",
